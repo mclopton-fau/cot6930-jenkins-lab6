@@ -13,10 +13,12 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''#!/bin/bash
-                python3 -m venv testenv
-                . testenv/bin/activate
-                pip install pytest numpy pandas scikit-learn
-                pytest
+                env -i HOME=$HOME PATH=/usr/bin:/bin bash -c '
+                    python3 -m venv testenv
+                    source testenv/bin/activate
+                    pip install pytest numpy pandas scikit-learn
+                    pytest
+                '
                 '''
             }
         }
